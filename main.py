@@ -1,61 +1,92 @@
-import pygame
+# -*- coding: utf-8 -*-
+
+from termcolor import cprint
+import os
+from pieces import *
+from board import Board
 
 
-def find_loc(x, y):
-    new_x = ((x)*110)+20
-    new_y = ((y)*110)+20
-    return (new_x, new_y)
+class Game:
+    columnKey = {
+        "a": 0,
+        "b": 1,
+        "c": 2,
+        "d": 3,
+        "e": 4,
+        "f": 5,
+        "g": 6,
+        "h": 7}
+    rowKey = {"1": 7, "2": 6, "3": 5, "4": 4, "5": 3, "6": 2, "7": 1, "8": 0}
+
+    def __init__(self):
+        self.boardy = Board()
+
+    def translate(self, a1notation):
+        try:
+            x = self.columnKey[a1notation[0].lower()]
+            y = self.rowKey[a1notation[1]]
+            return (x, y)
+        except BaseException:
+            raise MoveException(a1notation)
+
+    def isMoveValid(self, start, end):
+        if start == end:
+            raise MoveException(
+                None, "The move you entered makes it so your piece does not move.")
+        piece = self.boardy.board[start[1]][start[0]]
+        piece.isMoveValid(self.boardy.board, start, end)
+
+    # General game rules
+    def movePiece(self, start, end):
+        self.isMoveValid(start, end)
+        (sx, sy) = start
+        (ex, ey) = end
+        self.boardy.movePiece(start, end)
+        # when pawn makes it to other side and becomes queen
+        if isinstance(self.boardy.board[ey][ex], Pawn):
+            if (ey == 7 and self.boardy.board[ey][ex].side == -1) or (
+                    ey == 0 and self.boardy.board[ey][ex].side == 1):
+                self.boardy.board[ey][ex] = Queen(
+                    self.boardy.board[ey][ex].side)
+
+    def main(self):
+        error = ""
+
+        while True:
+            os.system("clear")
+            if error != "":
+                cprint("Invalid move! " + error, "red")
+                print("")
+                error = ""
+
+            # print("")
+            self.boardy.printBoard()
+
+            start = input("\nAt what X and Y is the piece you want to move?: ")
+            # game.get_piece(start)
+
+            destination = input(
+                "At what X and Y do you want the piece to be?: ")
+
+            try:
+                (sx, sy) = self.translate(start)
+                (ex, ey) = self.translate(destination)
+            except Exception as e:
+                error = "Invalid input notation."
+                error = str(e)
+                # os.system("clear")
+                continue
+
+            try:
+                self.movePiece((sx, sy), (ex, ey))
+            except MoveException as e:
+                error = "Your move goes against chess rules. " + e.message
+            # os.system("clear")
 
 
-win = pygame.display.set_mode((890, 890))
-run = True
-
-board = pygame.image.load("./images/board.png")
-wPawn = pygame.image.load("./images/white_pawn.png")
-bPawn = pygame.image.load("./images/brown_pawn.png")
-wRook = pygame.image.load("./images/white_rook.png")
-bRook = pygame.image.load("./images/brown_rook.png")
-wBishop = pygame.image.load("./images/white_bishop.png")
-bBishop = pygame.image.load("./images/brown_bishop.png")
-wKnight = pygame.image.load("./images/white_knight.png")
-bKnight = pygame.image.load("./images/brown_knight.png")
-wQueen = pygame.image.load("./images/white_queen.png")
-bQueen = pygame.image.load("./images/brown_queen.png")
-wKing = pygame.image.load("./images/white_king.png")
-bKing = pygame.image.load("./images/brown_king.png")
-
-while run:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            run = False
-    pygame.display.set_caption("Chess for Less!")
-    # Board
-    win.blit(board, (0, 0))
-    # Pawns
-    for i in range(8):
-        win.blit(wPawn, find_loc(i, 6))
-    for i in range(8):
-        win.blit(bPawn, find_loc(i, 1))
-    # Rooks
-    win.blit(wRook, find_loc(0, 7))
-    win.blit(wRook, find_loc(7, 7))
-    win.blit(bRook, find_loc(0, 0))
-    win.blit(bRook, find_loc(7, 0))
-    # Bishops
-    win.blit(wBishop, find_loc(2, 7))
-    win.blit(wBishop, find_loc(5, 7))
-    win.blit(bBishop, find_loc(2, 0))
-    win.blit(bBishop, find_loc(5, 0))
-    # Knights
-    win.blit(wKnight, find_loc(1, 7))
-    win.blit(wKnight, find_loc(6, 7))
-    win.blit(bKnight, find_loc(1, 0))
-    win.blit(bKnight, find_loc(6, 0))
-    # Queens
-    win.blit(wQueen, find_loc(3, 7))
-    win.blit(bQueen, find_loc(3, 0))
-    # Kings
-    win.blit(wKing, find_loc(4, 7))
-    win.blit(bKing, find_loc(4, 0))
-    pygame.display.update()
-pygame.quit()
+if __name__ == "__main__":
+    gamey = Game()
+    gamey.main()
+    # import unittest
+    # from test import *
+    # unittest.main()
