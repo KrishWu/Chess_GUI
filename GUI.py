@@ -2,6 +2,7 @@ import pygame
 from board import Board
 from pieces import *
 
+
 coolPieces = [Pawn, Rook, Knight, Bishop, Queen, King]
 
 

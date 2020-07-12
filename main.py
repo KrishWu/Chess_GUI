@@ -4,7 +4,7 @@ from termcolor import cprint
 import os
 from pieces import *
 from board import Board
-
+from GUI import *
 
 class Game:
     columnKey = {"a": 0, "b": 1, "c": 2, "d": 3, "e": 4, "f": 5, "g": 6, "h": 7}
@@ -53,6 +53,7 @@ class Game:
 
             # print("")
             self.boardy.printBoard()
+            place_board()
 
             start = input("\nAt what X and Y is the piece you want to move?: ")
             # game.get_piece(start)

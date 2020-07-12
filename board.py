@@ -1,6 +1,12 @@
 from pieces import *
 
 
+def find_loc(x, y):
+    new_x = ((x) * 110) + 20
+    new_y = ((y) * 110) + 20
+    return (new_x, new_y)
+
+
 class Board:
     def __init__(self):
         self.board = [
