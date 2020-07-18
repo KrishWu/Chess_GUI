@@ -28,7 +28,7 @@ coolPieces = [Pawn, Rook, Knight, Bishop, Queen, King]
 def find_loc(x, y):
     new_x = ((x) * 110) + 20
     new_y = ((y) * 110) + 20
-    return (new_x, new_y)
+    return new_x, new_y
 
 
 def place_board():
@@ -70,10 +70,11 @@ def place_board():
                 pygame.display.update()
 
 
-while run:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            run = False
-    place_board()
-    pygame.display.update()
-pygame.quit()
+if __name__ == "__main__":
+    while run:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                run = False
+        place_board()
+        pygame.display.update()
+    pygame.quit()

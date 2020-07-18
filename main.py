@@ -12,14 +12,25 @@ class Game:
 
     def __init__(self):
         self.boardy = Board()
+        self.run = True
 
     def translate(self, a1notation):
         try:
             x = self.columnKey[a1notation[0].lower()]
             y = self.rowKey[a1notation[1]]
-            return (x, y)
+            return x, y
         except BaseException:
             raise MoveException(a1notation)
+
+    def pygame_stuff(self):
+        pygame.time.wait(1000)
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                self.run = False
+            if event.type == pygame.MOUSEBUTTONUP:
+                print(pygame.mouse.get_pos())
+        place_board()
+        pygame.display.update()
 
     def isMoveValid(self, start, end):
         if start == end:
@@ -41,10 +52,14 @@ class Game:
                 self.boardy.board[ey][ex] = Queen(
                     self.boardy.board[ey][ex].side)
 
+    def main_gui(self):
+        while self.run:
+            self.pygame_stuff()
+
     def main(self):
         error = ""
 
-        while True:
+        while self.run:
             os.system("clear")
             if error != "":
                 cprint("Invalid move! " + error, "red")
@@ -75,11 +90,12 @@ class Game:
             except MoveException as e:
                 error = "Your move goes against chess rules. " + e.message
             # os.system("clear")
+        pygame.quit()
 
 
 if __name__ == "__main__":
     gamey = Game()
-    gamey.main()
+    gamey.main_gui()
     # import unittest
     # from test import *
     # unittest.main()
