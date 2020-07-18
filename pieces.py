@@ -194,16 +194,16 @@ class Queen(ChessPiece):
             for y in range(sy + maybe, ey, maybe):
                 if not isinstance(board[y][sx], EmptySpace):
                     raise MoveException(
-                        None, "The rook cannot jump over another piece.")
+                        None, "The queen cannot jump over another piece.")
             return True
         if ey == sy:
             maybe = sign(ex - sx)
             for i in range(sx + maybe, ex, maybe):
                 if not isinstance(board[sy][i], EmptySpace):
                     raise MoveException(
-                        None, "The rook cannot jump over another piece.")
+                        None, "The queen cannot jump over another piece.")
             return True
-        raise MoveException(None, "The rook must go in a strait line.")
+        raise MoveException(None, "The queen must go in a strait line.")
 
 
 class King(ChessPiece):
