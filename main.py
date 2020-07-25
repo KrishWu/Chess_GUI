@@ -22,16 +22,6 @@ class Game:
         except BaseException:
             raise MoveException(a1notation)
 
-    def pygame_stuff(self):
-        pygame.time.wait(1000)
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                self.run = False
-            if event.type == pygame.MOUSEBUTTONUP:
-                print(pygame.mouse.get_pos())
-        place_board()
-        pygame.display.update()
-
     def isMoveValid(self, start, end):
         if start == end:
             raise MoveException(
@@ -53,8 +43,33 @@ class Game:
                     self.boardy.board[ey][ex].side)
 
     def main_gui(self):
+        place_board()
+        pygame.display.update()
+        error = ""
+        clicks = 0
         while self.run:
-            self.pygame_stuff()
+            if error != "":
+                cprint("Invalid move! " + error, "red")
+                print("")
+                error = ""
+
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    self.run = False
+                if event.type == pygame.MOUSEBUTTONUP:
+                    if clicks == 0:
+                        start = pygame.mouse.get_pos()
+                        sx = start[0]//111
+                        sy = start[1]//111
+                        clicks += 1
+                    else:
+                        end = pygame.mouse.get_pos()
+                        ex = start[0] // 111
+                        ey = start[1] // 111
+                        clicks = 0
+                        self.movePiece((sx, sy), (ex, ey))
+                        place_board()
+                        pygame.display.update()
 
     def main(self):
         error = ""
@@ -68,7 +83,6 @@ class Game:
 
             # print("")
             self.boardy.printBoard()
-            place_board()
 
             start = input("\nAt what X and Y is the piece you want to move?: ")
             # game.get_piece(start)
