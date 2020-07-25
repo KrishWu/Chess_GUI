@@ -67,10 +67,13 @@ class Game:
                         ex = end[0] // 111
                         ey = end[1] // 111
                         clicks = 0
-                        self.movePiece((sx, sy), (ex, ey))
+                        try:
+                            self.movePiece((sx, sy), (ex, ey))
+                        except MoveException as e:
+                            error = "Your move goes against chess rules. " + e.message
                         place_board(self.boardy)
                         pygame.display.update()
-
+        pygame.quit()
     def main(self):
         error = ""
 
