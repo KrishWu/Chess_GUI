@@ -20,8 +20,6 @@ bQueen = pygame.image.load("./images/brown_queen.png")
 wKing = pygame.image.load("./images/white_king.png")
 bKing = pygame.image.load("./images/brown_king.png")
 
-boardyy = Board()
-
 coolPieces = [Pawn, Rook, Knight, Bishop, Queen, King]
 
 
@@ -31,7 +29,7 @@ def find_loc(x, y):
     return new_x, new_y
 
 
-def place_board():
+def place_board(boardyy):
     # Board
     win.blit(board, (0, 0))
     for y in range(8):

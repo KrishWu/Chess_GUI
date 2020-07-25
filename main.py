@@ -43,7 +43,7 @@ class Game:
                     self.boardy.board[ey][ex].side)
 
     def main_gui(self):
-        place_board()
+        place_board(self.boardy)
         pygame.display.update()
         error = ""
         clicks = 0
@@ -64,11 +64,11 @@ class Game:
                         clicks += 1
                     else:
                         end = pygame.mouse.get_pos()
-                        ex = start[0] // 111
-                        ey = start[1] // 111
+                        ex = end[0] // 111
+                        ey = end[1] // 111
                         clicks = 0
                         self.movePiece((sx, sy), (ex, ey))
-                        place_board()
+                        place_board(self.boardy)
                         pygame.display.update()
 
     def main(self):
