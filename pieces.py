@@ -135,7 +135,7 @@ class Knight(ChessPiece):
                     (-2, 1), (-2, -1), (-1, -2), (1, -2)]
         for item in moveList:
             try:
-                if sx + item[1] == ex and sy + item[2] == ey:
+                if sx + item[0] == ex and sy + item[1] == ey:
                     return True
             except BaseException:
                 pass
@@ -226,23 +226,39 @@ class King(ChessPiece):
         # Check for normal move
         moveList = [(1, 0), (0, 1), (-1, 0), (0, -1),
                     (1, 1), (1, -1), (-1, 1), (-1, -1)]
-        if isinstance(bEnd, King):
+        if not isinstance(bEnd, King):
             for item in moveList:
                 try:
-                    if not isinstance(board[sx + item[0], sy + item[1]], King):
-                        if sx == ex and sy + 1 == ey or sy - 1 == ey:
-                            return True
-                        elif sy == ey and sx + 1 == ex or sx - 1 == ex:
-                            return True
-                        raise MoveException(
-                            None, "The King cannot land in that location")
+                    if sx + item[0] == ex and sy + item[1] == ey:
+                        for ite in moveList:
+                            try:
+                                if isinstance(board[ex + ite[0]][ey + ite[1]], King):
+                                    raise MoveException(None, "There is another King in proximity to this King's end square. This is an illegal move.")
+                            except IndexError:
+                                pass
+                        return True
                 except BaseException:
                     pass
-                    raise MoveException(
-                        None, "The King cannot land in that location")
-            raise MoveException(None, "The King cannot land in that location")
-        else:
-            raise MoveException(None, "The King cannot land in that location")
+            raise MoveException(None, "The King cannot land in that location.")
+        raise MoveException(None, "The King cannot land in that location")
+
+
+        #     for item in moveList:
+        #         try:
+        #             if not isinstance(board[sx + item[0], sy + item[1]], King):
+        #                 if sx == ex and (sy + 1 == ey or sy - 1 == ey):
+        #                     return True
+        #                 elif sy == ey and (sx + 1 == ex or sx - 1 == ex):
+        #                     return True
+        #                 raise MoveException(
+        #                     None, "The King cannot land in that location")
+        #         except BaseException:
+        #             pass
+        #             raise MoveException(
+        #                 None, "The King cannot land in that location")
+        #     raise MoveException(None, "The King cannot land in that location")
+        # else:
+        #     raise MoveException(None, "The King cannot land in that location")
 
 
 class EmptySpace:

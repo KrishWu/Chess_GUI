@@ -41,27 +41,27 @@ def place_board(boardyy):
                     else:
                         win.blit(bPawn, find_loc(y, x))
                 if isinstance(boardyy.board[x][y], Rook):
-                    if boardyy.board[x][y] == 1:
+                    if boardyy.board[x][y].side == 1:
                         win.blit(wRook, find_loc(y, x))
                     else:
                         win.blit(bRook, find_loc(y, x))
                 if isinstance(boardyy.board[x][y], Knight):
-                    if boardyy.board[x][y] == 1:
+                    if boardyy.board[x][y].side == 1:
                         win.blit(wKnight, find_loc(y, x))
                     else:
                         win.blit(bKnight, find_loc(y, x))
                 if isinstance(boardyy.board[x][y], Bishop):
-                    if boardyy.board[x][y] == 1:
+                    if boardyy.board[x][y].side == 1:
                         win.blit(wBishop, find_loc(y, x))
                     else:
                         win.blit(bBishop, find_loc(y, x))
                 if isinstance(boardyy.board[x][y], Queen):
-                    if boardyy.board[x][y] == 1:
+                    if boardyy.board[x][y].side == 1:
                         win.blit(wQueen, find_loc(y, x))
                     else:
                         win.blit(bQueen, find_loc(y, x))
                 if isinstance(boardyy.board[x][y], King):
-                    if boardyy.board[x][y] == 1:
+                    if boardyy.board[x][y].side == 1:
                         win.blit(wKing, find_loc(y, x))
                     else:
                         win.blit(bKing, find_loc(y, x))
