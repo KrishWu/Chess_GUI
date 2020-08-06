@@ -224,15 +224,16 @@ class King(ChessPiece):
         bStart = board[sy][sx]
         bEnd = board[ey][ex]
         # Check for normal move
-        moveList = [(1, 0), (0, 1), (-1, 0), (0, -1),
-                    (1, 1), (1, -1), (-1, 1), (-1, -1)]
+        moveList = [(1, 0), (0, 1), (-1, 0), (0, -1), (1, 1), (1, -1), (-1, 1), (-1, -1)]
         if not isinstance(bEnd, King):
             for item in moveList:
                 try:
                     if sx + item[0] == ex and sy + item[1] == ey:
+                        print("hi")
                         for ite in moveList:
                             try:
-                                if isinstance(board[ex + ite[0]][ey + ite[1]], King):
+                                if isinstance(board[ex + ite[0]][ey + ite[1]], King) and bStart.side != board[ex + ite[0]][ey + ite[1]].side:
+                                    print("bye")
                                     raise MoveException(None, "There is another King in proximity to this King's end square. This is an illegal move.")
                             except IndexError:
                                 pass
@@ -240,7 +241,7 @@ class King(ChessPiece):
                 except BaseException:
                     pass
             raise MoveException(None, "The King cannot land in that location.")
-        raise MoveException(None, "The King cannot land in that location")
+        raise MoveException(None, "The King cannot land in that location because the end space has a king.")
 
 
         #     for item in moveList:
