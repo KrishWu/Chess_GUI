@@ -229,12 +229,11 @@ class King(ChessPiece):
             for item in moveList:
                 try:
                     if sx + item[0] == ex and sy + item[1] == ey:
-                        print("hi")
                         for ite in moveList:
                             try:
-                                if isinstance(board[ex + ite[0]][ey + ite[1]], King) and bStart.side != board[ex + ite[0]][ey + ite[1]].side:
-                                    print("bye")
+                                if isinstance(board[ey + ite[0]][ex + ite[1]], King) and bStart.side != board[ey + ite[0]][ex + ite[1]].side:
                                     raise MoveException(None, "There is another King in proximity to this King's end square. This is an illegal move.")
+                                # print(bStart.side, board[ex + ite[0]][ey + ite[1]].side) Backwards
                             except IndexError:
                                 pass
                         return True
