@@ -160,14 +160,14 @@ class Bishop(ChessPiece):
         bStart = board[sy][sx]
         bEnd = board[ey][ex]
         # Check for normal move
-        if abs((float(sx) - ex) / (sy - ey)) == 1:
-            return True
+        slope = (float(sx) - ex) / (sy - ey)
+        if abs(slope) == 1:
+            for i in range(1, abs(ex-(sx+int(slope*-1)))):
+                if not isinstance(board[sy+(i*int(slope))][sx+(i*int(slope))], EmptySpace):
+                    raise MoveException(None, "The Bishop cannot jump over other pieces.")
         else:
-            raise MoveException(
-                None, "The Bishop cannot land in that location")
-            # for i in range(sx+1, ex):
-            #   if board[sy][i] != 0:
-            #     return False
+            raise MoveException(None, "The Bishop cannot land in that location")
+
 
 
 class Queen(ChessPiece):
