@@ -162,12 +162,27 @@ class Bishop(ChessPiece):
         # Check for normal move
         slope = (float(sx) - ex) / (sy - ey)
         if abs(slope) == 1:
-            for i in range(1, abs(ex-(sx+int(slope*-1)))):
-                if not isinstance(board[sy+(i*int(slope))][sx+(i*int(slope))], EmptySpace):
-                    raise MoveException(None, "The Bishop cannot jump over other pieces.")
+            if sx < ex and sy < ey:
+                for i in range(sx+1, ex):
+                    if not isinstance(board[sy+i][sx+i], EmptySpace):
+                        raise MoveException(None, "The Bishop cannot jump over other pieces.")
+            elif ex < sx and ey < sy:
+                for i in range(ex+1, sx):
+                    if not isinstance(board[sy+-i][sx+-i], EmptySpace):
+                        raise MoveException(None, "The Bishop cannot jump over other pieces.")
+            elif sx < ex and sy > ey:
+                for i in range(sx+1, ex):
+                    if not isinstance(board[sy+-i][sx+i], EmptySpace):
+                        raise MoveException(None, "The Bishop cannot jump over other pieces.")
+            elif sx > ex and sy < ey:
+                for i in range(ex+1, sx):
+                    if not isinstance(board[sy+i][sx-i], EmptySpace):
+                        raise MoveException(None, "The Bishop cannot jump over other pieces.")
         else:
             raise MoveException(None, "The Bishop cannot land in that location")
 
+        # for i in range(1, abs(ex-(sx+int(slope*-1)))):
+        #     if not isinstance(board[sy+(i*int(slope))][sx+(i*int(slope))], EmptySpace):
 
 
 class Queen(ChessPiece):
