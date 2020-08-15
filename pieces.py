@@ -160,29 +160,29 @@ class Bishop(ChessPiece):
         bStart = board[sy][sx]
         bEnd = board[ey][ex]
         # Check for normal move
-        slope = (float(sx) - ex) / (sy - ey)
+        try:
+            slope = (float(sx) - ex) / (sy - ey)
+        except ZeroDivisionError:
+            raise MoveException(None, "The Bishop cannot move in a horizontally.")
         if abs(slope) == 1:
             if sx < ex and sy < ey:
-                for i in range(sx+1, ex):
+                for i in range(1, ex-sx):
                     if not isinstance(board[sy+i][sx+i], EmptySpace):
                         raise MoveException(None, "The Bishop cannot jump over other pieces.")
             elif ex < sx and ey < sy:
-                for i in range(ex+1, sx):
+                for i in range(1, sx-ex):
                     if not isinstance(board[sy+-i][sx+-i], EmptySpace):
                         raise MoveException(None, "The Bishop cannot jump over other pieces.")
             elif sx < ex and sy > ey:
-                for i in range(sx+1, ex):
+                for i in range(1, ex-sx):
                     if not isinstance(board[sy+-i][sx+i], EmptySpace):
                         raise MoveException(None, "The Bishop cannot jump over other pieces.")
             elif sx > ex and sy < ey:
-                for i in range(ex+1, sx):
+                for i in range(1, sx-ex):
                     if not isinstance(board[sy+i][sx-i], EmptySpace):
                         raise MoveException(None, "The Bishop cannot jump over other pieces.")
         else:
             raise MoveException(None, "The Bishop cannot land in that location")
-
-        # for i in range(1, abs(ex-(sx+int(slope*-1)))):
-        #     if not isinstance(board[sy+(i*int(slope))][sx+(i*int(slope))], EmptySpace):
 
 
 class Queen(ChessPiece):
@@ -198,7 +198,7 @@ class Queen(ChessPiece):
 
     def isMoveValid(self, board, start, end):
         super().isMoveValid(board, start, end)
-        print("Queen.testMove()")
+        # print("Queen.testMove()")
         (sx, sy) = start
         (ex, ey) = end
         bStart = board[sy][sx]
@@ -218,7 +218,29 @@ class Queen(ChessPiece):
                     raise MoveException(
                         None, "The queen cannot jump over another piece.")
             return True
-        raise MoveException(None, "The queen must go in a strait line.")
+        try:
+            slope = (float(sx) - ex) / (sy - ey)
+        except ZeroDivisionError:
+            raise MoveException(None, "The Queen cannot move in a horizontally.")
+        if abs(slope) == 1:
+            if sx < ex and sy < ey:
+                for i in range(1, ex-sx):
+                    if not isinstance(board[sy+i][sx+i], EmptySpace):
+                        raise MoveException(None, "The Queen cannot jump over other pieces.")
+            elif ex < sx and ey < sy:
+                for i in range(1, sx-ex):
+                    if not isinstance(board[sy+-i][sx+-i], EmptySpace):
+                        raise MoveException(None, "The Queen cannot jump over other pieces.")
+            elif sx < ex and sy > ey:
+                for i in range(1, ex-sx):
+                    if not isinstance(board[sy+-i][sx+i], EmptySpace):
+                        raise MoveException(None, "The Queen cannot jump over other pieces.")
+            elif sx > ex and sy < ey:
+                for i in range(1, sx-ex):
+                    if not isinstance(board[sy+i][sx-i], EmptySpace):
+                        raise MoveException(None, "The Queen cannot jump over other pieces.")
+        else:
+            raise MoveException(None, "The Queen cannot land in that location")
 
 
 class King(ChessPiece):
