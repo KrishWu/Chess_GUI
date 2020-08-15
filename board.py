@@ -6,6 +6,16 @@ def find_loc(x, y):
     new_y = ((y) * 110) + 20
     return (new_x, new_y)
 
+columnKey = {
+        "a": 0,
+        "b": 1,
+        "c": 2,
+        "d": 3,
+        "e": 4,
+        "f": 5,
+        "g": 6,
+        "h": 7}
+rowKey = {"1": 7, "2": 6, "3": 5, "4": 4, "5": 3, "6": 2, "7": 1, "8": 0}
 
 class Board:
     def __init__(self):
@@ -48,16 +58,24 @@ class Board:
         self.board[ey][ex] = self.board[sy][sx]
         self.board[sy][sx] = EmptySpace()
 
-    columnKey = {
-        "a": 0,
-        "b": 1,
-        "c": 2,
-        "d": 3,
-        "e": 4,
-        "f": 5,
-        "g": 6,
-        "h": 7}
-    rowKey = {"1": 7, "2": 6, "3": 5, "4": 4, "5": 3, "6": 2, "7": 1, "8": 0}
+    def checkWin(self):
+        wKing = False
+        bKing = False
+        for y in range(8):
+            for x in range(8):
+                if isinstance(self.board[y][x], King):
+                    if self.board[y][x].side == 1:
+                        wKing = True
+                    else:
+                        bKing = True
+        if wKing and bKing:
+            return 0
+        if wKing and not bKing:
+            return 1
+        if bKing and not wKing:
+            return -1
+
+
 
     def translate(self, a1notation):
         try:

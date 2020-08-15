@@ -65,7 +65,6 @@ class Pawn(ChessPiece):
                         return True
             # Check for normal move
             if sx == ex and ey == sy - bStart.side and bEnd.side == 0:
-                print("made")
                 return True
             raise MoveException(None, "The pawn had an invalid move.")
         # Check for attack
@@ -74,6 +73,7 @@ class Pawn(ChessPiece):
                 return True
             if bStart.side > 0 and sy - 1 == ey and abs(ex - sx) == 1:
                 return True
+            raise MoveException(None, "The pawn cannot jump multiple spaces when attacking invalid move.")
         else:
             raise MoveException(None, "The pawn had an invalid move.")
 

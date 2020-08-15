@@ -13,6 +13,7 @@ class Game:
     def __init__(self):
         self.boardy = Board()
         self.run = True
+        self.turn = 0
 
     def translate(self, a1notation):
         try:
@@ -68,7 +69,11 @@ class Game:
                         ey = end[1] // 111
                         clicks = 0
                         try:
-                            self.movePiece((sx, sy), (ex, ey))
+                            if (self.boardy.board[sy][sx].side == 1 and self.turn % 2 == 0) or (self.boardy.board[sy][sx].side == -1 and self.turn % 2 == 1):
+                                self.movePiece((sx, sy), (ex, ey))
+                                self.turn += 1
+                                if checkWin != 0:
+                                    winner
                         except MoveException as e:
                             error = "Your move goes against chess rules. " + e.message
                         place_board(self.boardy)
