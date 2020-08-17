@@ -72,8 +72,11 @@ class Game:
                             if (self.boardy.board[sy][sx].side == 1 and self.turn % 2 == 0) or (self.boardy.board[sy][sx].side == -1 and self.turn % 2 == 1):
                                 self.movePiece((sx, sy), (ex, ey))
                                 self.turn += 1
-                                if checkWin != 0:
-                                    winner
+                                if self.boardy.checkWin():
+                                    # print(self.boardy.checkWin())
+                                    show_text(self.boardy.checkWin())
+                                    pygame.display.update()
+                                    break
                         except MoveException as e:
                             error = "Your move goes against chess rules. " + e.message
                         place_board(self.boardy)

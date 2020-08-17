@@ -2,6 +2,7 @@ import pygame
 from board import Board
 from pieces import *
 
+pygame.init()
 win = pygame.display.set_mode((890, 890))
 run = True
 pygame.display.set_caption("Chess for Less!")
@@ -67,6 +68,14 @@ def place_board(boardyy):
                         win.blit(bKing, find_loc(y, x))
                 pygame.display.update()
 
+def show_text(text):
+    green = (0, 255, 0)
+    blue = (0, 0, 128)
+    font = pygame.font.Font('freesansbold.ttf', 32)
+    text = font.render(text, True, green, blue)
+    textRect = text.get_rect()
+    textRect.center = (445, 445)
+    win.blit(text, textRect)
 
 if __name__ == "__main__":
     while run:

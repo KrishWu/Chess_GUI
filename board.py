@@ -69,11 +69,11 @@ class Board:
                     else:
                         bKing = True
         if wKing and bKing:
-            return 0
+            return ""
         if wKing and not bKing:
-            return 1
+            return "The white side has won!"
         if bKing and not wKing:
-            return -1
+            return "The black side has won!"
 
 
 
