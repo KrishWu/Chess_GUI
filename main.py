@@ -62,7 +62,10 @@ class Game:
                         start = pygame.mouse.get_pos()
                         sx = start[0]//111
                         sy = start[1]//111
-                        clicks += 1
+                        if not isinstance(self.boardy.board[sy][sx], EmptySpace):
+                            clicks += 1
+                            draw_cursor(sx, sy)
+                            pygame.display.update()
                     else:
                         end = pygame.mouse.get_pos()
                         ex = end[0] // 111

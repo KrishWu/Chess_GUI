@@ -68,6 +68,15 @@ def place_board(boardyy):
                         win.blit(bKing, find_loc(y, x))
                 pygame.display.update()
 
+def draw_cursor(x,y):
+    fx, fy = find_loc(x, y)
+    fx -= 5
+    fy -= 5
+    pygame.draw.line(win, pygame.Color(39, 235, 242), (fx, fy), (fx+110, fy), 5)
+    pygame.draw.line(win, pygame.Color(39, 235, 242), (fx+110, fy), (fx + 110, fy+110), 5)
+    pygame.draw.line(win, pygame.Color(39, 235, 242), (fx + 110, fy+110), (fx, fy + 110), 5)
+    pygame.draw.line(win, pygame.Color(39, 235, 242), (fx, fy + 110), (fx, fy), 5)
+
 def show_text(text):
     green = (0, 255, 0)
     blue = (0, 0, 128)

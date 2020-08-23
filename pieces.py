@@ -57,16 +57,16 @@ class Pawn(ChessPiece):
             # Check for start move
             if bStart.side < 0:
                 if sy + 2 == ey and sx == ex and sy == 1:
-                    if isinstance(board[ey + 1][ex], EmptySpace):
+                    if isinstance(board[sy + 1][sx], EmptySpace):
                         return True
             if bStart.side > 0:
                 if sy - 2 == ey and sx == ex and sy == 6:
-                    if isinstance(board[ey - 1][ex], EmptySpace):
+                    if isinstance(board[sy - 1][sx], EmptySpace):
                         return True
             # Check for normal move
             if sx == ex and ey == sy - bStart.side and bEnd.side == 0:
                 return True
-            raise MoveException(None, "The pawn had an invalid move.")
+            raise MoveException(None, "The pawn had an invalid start move.")
         # Check for attack
         elif bStart.side * bEnd.side < 0:
             if bStart.side < 0 and sy + 1 == ey and abs(ex - sx) == 1:
